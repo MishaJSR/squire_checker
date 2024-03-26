@@ -1,5 +1,6 @@
 import math
 from itertools import permutations
+from typing import Union
 
 
 class SquareFinder:
@@ -14,24 +15,27 @@ class SquareFinder:
             return cls.square_square(args)
         elif len(args) == 3:
             return cls.square_triangle(args, checker)
-        return 'not correct parameters'
+        raise Exception('not correct parameters')
 
     @classmethod
-    def square_circle(cls, radius):
-        return round(radius**2 * math.pi)
+    def square_circle(cls, radius) -> int:
+        return round(radius ** 2 * math.pi)
 
     @classmethod
-    def square_square(cls, args):
+    def square_square(cls, args) -> int:
         return args[0] * args[1]
 
     @classmethod
-    def square_triangle(cls, args, checker):
+    def square_triangle(cls, args, checker) -> Union[tuple, int]:
         a, b, c = args
         p = (a + b + c) / 2
-        pp = p*(p - a)*(p - b)*(p - c)
-        if checker and pp > 0:
+        pp = p * (p - a) * (p - b) * (p - c)
+        if pp <= 0:
+            raise Exception('No available triangle')
+        if checker:
             for el in list(permutations(args)):
-                if el[0]**2 == el[1]**2 + el[2]**2:
+                if el[0] ** 2 == el[1] ** 2 + el[2] ** 2:
                     return round(math.sqrt(pp)), True
             return round(math.sqrt(pp)), False
-        return 'No available triangle' if pp <= 0 else round(math.sqrt(pp))
+        else:
+            return round(math.sqrt(pp))
