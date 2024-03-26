@@ -35,5 +35,3 @@ class SquareFinder:
                     return round(math.sqrt(pp)), True
             return round(math.sqrt(pp)), False
         return 'No available triangle' if pp <= 0 else round(math.sqrt(pp))
-
-#

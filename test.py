@@ -1,11 +1,9 @@
 from square_finder.SquareFinder import SquareFinder
-from itertools import permutations
 
-
-circle = SquareFinder.find_square(10)
-triangle = SquareFinder.find_square(10, 10, 7)
-triangle_checker = SquareFinder.find_square(3, 4, 5, checker=True)
-squire = SquareFinder.find_square(10, 10)
+circle = SquareFinder.find_square(10)  # find squire of circle
+triangle = SquareFinder.find_square(10, 10, 7)  # find squire of triangle
+triangle_checker = SquareFinder.find_square(3, 4, 5, checker=True)  # find squire of triangle with checker of rectangle
+squire = SquareFinder.find_square(10, 10) # find squire of squire
 print(circle)
 print(triangle)
 print(triangle_checker)
