@@ -3,4 +3,4 @@
 pycache
 venv/
 .env
-.idea
+idea
