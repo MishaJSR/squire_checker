@@ -8,7 +8,7 @@ class SquareFinder:
         pass
 
     @classmethod
-    def find_square(cls, *args: Union[int, float], checker=False) -> Union[tuple, float]:
+    def find_square(cls, *args: Union[int, float], checker: bool = False) -> Union[tuple, float]:
         match len(args):
             case 1:
                 return cls.square_circle(args[0])
