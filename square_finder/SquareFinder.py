@@ -8,34 +8,36 @@ class SquareFinder:
         pass
 
     @classmethod
-    def find_square(cls, *args, checker=False) -> Union[tuple, int]:
-        if len(args) == 1:
-            return cls.square_circle(args[0])
-        elif len(args) == 2:
-            return cls.square_square(args)
-        elif len(args) == 3:
-            return cls.square_triangle(args, checker)
-        raise Exception('not correct parameters')
+    def find_square(cls, *args: Union[int, float], checker=False) -> Union[tuple, float]:
+        match len(args):
+            case 1:
+                return cls.square_circle(args[0])
+            case 2:
+                return cls.square_square(args)
+            case 3:
+                return cls.square_triangle(args, checker)
+            case _:
+                raise Exception('not correct parameters')
 
     @classmethod
-    def square_circle(cls, radius) -> int:
-        return round(radius ** 2 * math.pi)
+    def square_circle(cls, radius) -> float:
+        return round(radius ** 2 * math.pi, 2)
 
     @classmethod
-    def square_square(cls, args) -> int:
-        return args[0] * args[1]
+    def square_square(cls, args) -> float:
+        return round(args[0] * args[1], 2)
 
     @classmethod
-    def square_triangle(cls, args, checker) -> Union[tuple, int]:
+    def square_triangle(cls, args, checker) -> Union[tuple, float]:
         a, b, c = args
         p = (a + b + c) / 2
         pp = p * (p - a) * (p - b) * (p - c)
         if pp <= 0:
             raise Exception('No available triangle')
         if checker:
-            for el in list(permutations(args)):
+            for el in [[a, b, c], [b, a, c], [c, a, b]]:
                 if el[0] ** 2 == el[1] ** 2 + el[2] ** 2:
-                    return round(math.sqrt(pp)), True
-            return round(math.sqrt(pp)), False
+                    return round(math.sqrt(pp), 2), True
+            return round(math.sqrt(pp), 2), False
         else:
-            return round(math.sqrt(pp))
+            return round(math.sqrt(pp), 2)
