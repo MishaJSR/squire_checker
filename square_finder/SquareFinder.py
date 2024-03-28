@@ -3,6 +3,16 @@ from abc import abstractmethod, ABC
 from typing import Union
 
 
+class Side:
+    def __get__(self, obj, value):
+        return self.value
+
+    def __set__(self, obj, value):
+        if value < 0:
+            raise ValueError("Side must be positive")
+        self.value = value
+
+
 class Figure(ABC):
     @abstractmethod
     def calculate_area(self):
@@ -10,6 +20,8 @@ class Figure(ABC):
 
 
 class Rectangle(Figure):
+    a = Side()
+    b = Side()
     def __init__(self, a, b):
         self.a = a
         self.b = b
@@ -23,6 +35,7 @@ class Triangle(Figure):
         self.a = a
         self.b = b
         self.c = c
+
 
     def calculate_area(self) -> Union[int, float]:
         p = (self.a + self.b + self.c) / 2

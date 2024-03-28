@@ -8,3 +8,4 @@ print(rec)
 print(tri)
 print(right_tri)
 print(right_tri_square)
+
