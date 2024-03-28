@@ -1,43 +1,44 @@
 import math
-from itertools import permutations
+from abc import abstractmethod, ABC
 from typing import Union
 
 
-class SquareFinder:
-    def __init__(self):
+class Figure(ABC):
+    @abstractmethod
+    def calculate_area(self):
         pass
 
-    @classmethod
-    def find_square(cls, *args: Union[int, float], checker: bool = False) -> Union[tuple, float]:
-        match len(args):
-            case 1:
-                return cls.square_circle(args[0])
-            case 2:
-                return cls.square_square(args)
-            case 3:
-                return cls.square_triangle(args, checker)
-            case _:
-                raise Exception('not correct parameters')
 
-    @classmethod
-    def square_circle(cls, radius) -> float:
-        return round(radius ** 2 * math.pi, 2)
+class Rectangle(Figure):
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
 
-    @classmethod
-    def square_square(cls, args) -> float:
-        return round(args[0] * args[1], 2)
+    def calculate_area(self) -> Union[int, float]:
+        return self.a * self.b
 
-    @classmethod
-    def square_triangle(cls, args, checker) -> Union[tuple, float]:
-        a, b, c = args
-        p = (a + b + c) / 2
-        pp = p * (p - a) * (p - b) * (p - c)
+
+class Triangle(Figure):
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def calculate_area(self) -> Union[int, float]:
+        p = (self.a + self.b + self.c) / 2
+        pp = p * (p - self.a) * (p - self.b) * (p - self.c)
         if pp <= 0:
             raise Exception('No available triangle')
-        if checker:
-            for el in [[a, b, c], [b, a, c], [c, a, b]]:
-                if el[0] ** 2 == el[1] ** 2 + el[2] ** 2:
-                    return round(math.sqrt(pp), 2), True
-            return round(math.sqrt(pp), 2), False
-        else:
-            return round(math.sqrt(pp), 2)
+        return round(math.sqrt(pp), 2)
+
+
+class TriangleChecker(Triangle):
+    def __init__(self, a, b, c):
+        super().__init__(a, b, c)
+
+    def check(self) -> bool:
+        for el in [[self.a, self.b, self.c], [self.b, self.a, self.c], [self.c, self.a, self.b]]:
+            if el[0] ** 2 == el[1] ** 2 + el[2] ** 2:
+                return True
+        return False
+
